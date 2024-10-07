@@ -4,19 +4,18 @@ import java.util.NoSuchElementException;
  * Represents the mappings for a single category of items that should
  * be displayed
  * 
- * @author Catie Baker & YOUR NAME HERE
+ * @author Catie Baker & Lily Blanchard
  *
  */
 public class AACCategory implements AACPage {
 
-	
 	/**
 	 * Creates a new empty category with the given name
 	 * @param name the name of the category
 	 */
 	public AACCategory(String name) {
-
-	}
+		// STUB
+	} // AACCategory(String)
 	
 	/**
 	 * Adds the image location, text pairing to the category
@@ -24,8 +23,8 @@ public class AACCategory implements AACPage {
 	 * @param text the text that image should speak
 	 */
 	public void addItem(String imageLoc, String text) {
-
-	}
+		// STUB
+	} // addItem(String, String)
 
 	/**
 	 * Returns an array of all the images in the category
@@ -33,16 +32,16 @@ public class AACCategory implements AACPage {
 	 * it should return an empty array
 	 */
 	public String[] getImageLocs() {
-		return null;
-	}
+		return null; // STUB
+	} // getImageLocs()
 
 	/**
 	 * Returns the name of the category
 	 * @return the name of the category
 	 */
 	public String getCategory() {
-		return "";
-	}
+		return ""; // STUB
+	} // getCategory()
 
 	/**
 	 * Returns the text associated with the given image in this category
@@ -52,8 +51,8 @@ public class AACCategory implements AACPage {
 	 * 		   category
 	 */
 	public String select(String imageLoc) {
-		return "";
-	}
+		return ""; // STUB
+	} // select(String)
 
 	/**
 	 * Determines if the provided images is stored in the category
@@ -61,6 +60,6 @@ public class AACCategory implements AACPage {
 	 * @return true if it is in the category, false otherwise
 	 */
 	public boolean hasImage(String imageLoc) {
-		return false;
-	}
+		return false; // STUB
+	} // hasImage(String)
 }
