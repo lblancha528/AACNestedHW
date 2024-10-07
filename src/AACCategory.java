@@ -1,4 +1,6 @@
 import java.util.NoSuchElementException;
+import edu.grinnell.csc207.util.AssociativeArray;
+import edu.grinnell.csc207.util.NullKeyException;
 
 /**
  * Represents the mappings for a single category of items that should
@@ -9,12 +11,19 @@ import java.util.NoSuchElementException;
  */
 public class AACCategory implements AACPage {
 
+	/** The AssociativeArray where the imageLocation/text pairs are stored. */
+	AssociativeArray<String, String> imgTxt;
+
+	/** The name of the category. */
+	String catName;
+
 	/**
 	 * Creates a new empty category with the given name
 	 * @param name the name of the category
 	 */
 	public AACCategory(String name) {
-		// STUB
+		this.imgTxt = new AssociativeArray<String, String>();
+		this.catName = name;
 	} // AACCategory(String)
 	
 	/**
@@ -23,7 +32,12 @@ public class AACCategory implements AACPage {
 	 * @param text the text that image should speak
 	 */
 	public void addItem(String imageLoc, String text) {
-		// STUB
+		try {
+			this.imgTxt.set(imageLoc, text);
+		} catch (Exception NullKeyException) {
+			System.err.println("Fail to set pair.");
+		} // try/catch
+		return;
 	} // addItem(String, String)
 
 	/**
@@ -32,7 +46,7 @@ public class AACCategory implements AACPage {
 	 * it should return an empty array
 	 */
 	public String[] getImageLocs() {
-		return null; // STUB
+		return this.imgTxt.getKeys();
 	} // getImageLocs()
 
 	/**
@@ -40,7 +54,7 @@ public class AACCategory implements AACPage {
 	 * @return the name of the category
 	 */
 	public String getCategory() {
-		return ""; // STUB
+		return this.catName;
 	} // getCategory()
 
 	/**
@@ -51,7 +65,12 @@ public class AACCategory implements AACPage {
 	 * 		   category
 	 */
 	public String select(String imageLoc) {
-		return ""; // STUB
+		try {
+			return this.imgTxt.get(imageLoc);
+		} catch (Exception NullKeyException) {
+			System.err.println("Cannot find null key pair.");
+			return ""; // maybe don't do that, we'll see
+		}
 	} // select(String)
 
 	/**
@@ -60,6 +79,11 @@ public class AACCategory implements AACPage {
 	 * @return true if it is in the category, false otherwise
 	 */
 	public boolean hasImage(String imageLoc) {
-		return false; // STUB
+		try {
+			return this.imgTxt.hasKey(imageLoc);
+		} catch (Exception NullKeyException) {
+			System.err.println("Cannot find null key.");
+			return false;
+		} // try/catch
 	} // hasImage(String)
-}
+} // class AACCategory

@@ -177,7 +177,7 @@ public class AssociativeArray<K, V> {
   /**
    * Remove the key/value pair associated with a key. Future calls to get(key) will throw an
    * exception. If the key does not appear in the associative array, does nothing.
-   *
+   *		AssociativeArray<String, String> thing = new AssociativeArray<String, String>();
    * @param key A key
    */
   public void remove(K key) {
@@ -200,6 +200,27 @@ public class AssociativeArray<K, V> {
   public int size() {
     return this.size;
   } // size()
+
+  /**
+   * Return an array of strings where each element is a key from this structure.
+   * @return an array of strings where each element is a key from this structure
+   */
+  public String[] getKeys() {
+    String[] keys = new String[this.size()]; 
+    // i tracks positon in keys, r tracks position in pairs
+    // this lets me skip blank spots in pairs and have no gaps in keys
+    for (int i = 0, r = 0; i < this.pairs.length;) {
+      if (this.pairs[r] == null) {
+        r++;
+        continue;
+      } else {
+        keys[i] = this.pairs[r].key.toString();
+        i++;
+        r++;
+      } // if
+    } // for
+    return keys;
+  } // getKeys()
 
   // +-----------------+---------------------------------------------
   // | Private Methods |
