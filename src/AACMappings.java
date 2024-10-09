@@ -1,3 +1,5 @@
+import edu.grinnell.csc207.util.AssociativeArray;
+
 /**
  * Creates a set of mappings of an AAC that has two levels,
  * one for categories and then within each category, it has
@@ -10,6 +12,15 @@
  *
  */
 public class AACMappings implements AACPage {
+
+	/** The array that stores the category/image pairs. */
+	AssociativeArray<String, String> categories;
+
+	/** What category we're currently in. "" if at top level. */
+	AACCategory here;
+
+	/** The name of the file that stores the mapping info. */
+	String name;
 	
 	/**
 	 * Creates a set of mappings for the AAC based on the provided
@@ -32,8 +43,9 @@ public class AACMappings implements AACPage {
 	 * @param filename the name of the file that stores the mapping information
 	 */
 	public AACMappings(String filename) {
-
-	}
+		this.name = filename;
+		// STUB
+	} // AACMappings
 	
 	/**
 	 * Given the image location selected, it determines the action to be
@@ -50,8 +62,11 @@ public class AACMappings implements AACPage {
 	 * category
 	 */
 	public String select(String imageLoc) {
+		if (isCategory(imageLoc)) {
+			this.here = 
+		}
 		return null;
-	}
+	} // select(String)
 	
 	/**
 	 * Provides an array of all the images in the current category
@@ -60,7 +75,7 @@ public class AACMappings implements AACPage {
 	 */
 	public String[] getImageLocs() {
 		return null;
-	}
+	} // getImageLocs()
 	
 	/**
 	 * Resets the current category of the AAC back to the default
@@ -68,7 +83,7 @@ public class AACMappings implements AACPage {
 	 */
 	public void reset() {
 
-	}
+	} // reset()
 	
 	
 	/**
@@ -93,7 +108,7 @@ public class AACMappings implements AACPage {
 	 */
 	public void writeToFile(String filename) {
 		
-	}
+	} // writeToFile(String)
 	
 	/**
 	 * Adds the mapping to the current category (or the default category if
@@ -103,7 +118,7 @@ public class AACMappings implements AACPage {
 	 */
 	public void addItem(String imageLoc, String text) {
 		
-	}
+	} // addItem()
 
 
 	/**
@@ -113,7 +128,7 @@ public class AACMappings implements AACPage {
 	 */
 	public String getCategory() {
 		return null;
-	}
+	} // getCategory()
 
 
 	/**
@@ -125,5 +140,5 @@ public class AACMappings implements AACPage {
 	 */
 	public boolean hasImage(String imageLoc) {
 		return false;
-	}
-}
+	} // hasImage()
+} // class AACMappings()
