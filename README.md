@@ -4,6 +4,7 @@ for CSC207-01 with Rebelsky
 
 **Acknowledgements**
 * Evening Tutors: Maria and Garikai
+* Nikky Moreno: setting up test suite tips
 
 **Notes to Self**
 * Check all files for random notes to self, commented out lines, etc.
