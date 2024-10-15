@@ -23,14 +23,14 @@ import java.util.NoSuchElementException;
  */
 public class AACMappings implements AACPage {
 
-	/** The array that stores the category/image pairs. */
-	AssociativeArray<String, String> categories;
+	/** The array that stores the category image/ name pairs. */
+	AACCategory names = new AACCategory("names");
+
+	/** The array that stores the names/ AAs. */
+	AssociativeArray<String, AACCategory> categories;
 
 	/** What category we're currently in. "" if at top level. */
-	AACCategory here;
-
-	/** The name of the file that stores the mapping info. */
-	String name;
+	String here;
 	
 	/**
 	 * Creates a set of mappings for the AAC based on the provided
@@ -53,7 +53,11 @@ public class AACMappings implements AACPage {
 	 * @param filename the name of the file that stores the mapping information
 	 */
 	public AACMappings(String filename) {
-		this.name = filename;
+		FileReader file = new FileReader(AACNestedHW.img);
+		// if first character of line is NOT > add this line as an entry in categories
+		// set 'here' to the most recently added category
+		// if first character of line IS > add this line as an entry in this.here.AA
+		// set 'here' to surface when done!!
 		// STUB
 	} // AACMappings
 	
@@ -73,7 +77,7 @@ public class AACMappings implements AACPage {
 	 */
 	public String select(String imageLoc) {
 		if (isCategory(imageLoc)) {
-			this.here = 
+			this.here = categories.get(imageLoc);
 		}
 		return null;
 	} // select(String)
@@ -92,7 +96,7 @@ public class AACMappings implements AACPage {
 	 * category
 	 */
 	public void reset() {
-
+		this.here = categories;
 	} // reset()
 	
 	
@@ -137,7 +141,7 @@ public class AACMappings implements AACPage {
 	 * on the default category
 	 */
 	public String getCategory() {
-		return null;
+		return this.here;
 	} // getCategory()
 
 
