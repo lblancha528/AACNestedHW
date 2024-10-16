@@ -1,5 +1,6 @@
 import java.util.NoSuchElementException;
 import edu.grinnell.csc207.util.AssociativeArray;
+import edu.grinnell.csc207.util.KeyNotFoundException;
 import edu.grinnell.csc207.util.NullKeyException;
 
 /**
@@ -64,13 +65,12 @@ public class AACCategory implements AACPage {
 	 * @throws NoSuchElementException if the image provided is not in the current
 	 * 		   category
 	 */
-	public String select(String imageLoc) {
+	public String select(String imageLoc) throws NoSuchElementException {
 		try {
 			return this.imgTxt.get(imageLoc);
-		} catch (Exception NullKeyException) {
-			System.err.println("Cannot find null key pair.");
-			return ""; // maybe don't do that, we'll see
-		}
+		} catch (KeyNotFoundException e) {
+			throw new NoSuchElementException();
+		} // try/catch
 	} // select(String)
 
 	/**

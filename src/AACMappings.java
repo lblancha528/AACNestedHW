@@ -26,7 +26,7 @@ public class AACMappings implements AACPage {
 	/** The array that stores the category image/ name pairs. */
 	AACCategory names = new AACCategory("names");
 
-	/** The array that stores the names/ AAs. */
+	/** The array that stores the image loc/ AAs. */
 	AssociativeArray<String, AACCategory> categories;
 
 	/** What category we're currently in. "" if at top level. */
@@ -53,12 +53,47 @@ public class AACMappings implements AACPage {
 	 * @param filename the name of the file that stores the mapping information
 	 */
 	public AACMappings(String filename) {
-		FileReader file = new FileReader(AACNestedHW.img);
-		// if first character of line is NOT > add this line as an entry in categories
-		// set 'here' to the most recently added category
-		// if first character of line IS > add this line as an entry in this.here.AA
-		// set 'here' to surface when done!!
-		// STUB
+		this.categories = new AssociativeArray<String, AACCategory>();
+		this.here = "";
+		try {
+			FileReader file = new FileReader(filename);
+			BufferedReader eyes = new BufferedReader(file);
+			String line;
+			AACCategory catHolder = null;
+
+			while (eyes.read() > -1) {
+				line = eyes.readLine();
+				if (!line.startsWith(">")) {
+					String[] linePieces = line.split(" ");
+					if (linePieces.length != 2) {
+						System.err.println("Invalid file format.");
+						break;
+					} // if
+					catHolder = new AACCategory(linePieces[1]);
+					try {
+						categories.set(linePieces[0], catHolder);
+						names.addItem(linePieces[0], linePieces[1]);
+					} catch (NullKeyException e) {
+					} // try/catch
+				} else {
+					String[] linePieces = line.split(" ");
+					if (linePieces.length != 2) {
+						System.err.println("Invalid file format.");
+						break;
+					} // if
+					if (catHolder != null) {
+						this.addItem(linePieces[0], linePieces[1]);
+					} else {
+						System.err.println("Invalid file format.");
+					} // if
+				} // if
+			} // while
+
+			file.close();
+			eyes.close();
+		} catch (Exception FileNotFoundException) {
+			System.err.println("File not found.");
+		} // try/catch
 	} // AACMappings
 	
 	/**
@@ -76,10 +111,18 @@ public class AACMappings implements AACPage {
 	 * category
 	 */
 	public String select(String imageLoc) {
-		if (isCategory(imageLoc)) {
-			this.here = categories.get(imageLoc);
-		}
-		return null;
+		if ((this.here.equals("")) && this.hasImage(imageLoc)) {
+			this.here = imageLoc;
+			return "";
+		} else if (!this.here.equals("")) {
+			try {
+				return categories.get(this.here).select(imageLoc);
+			} catch (KeyNotFoundException e) {
+				throw new NoSuchElementException();
+			} // try/catch
+		} else {
+			throw new NoSuchElementException();
+		} // if
 	} // select(String)
 	
 	/**
@@ -88,6 +131,14 @@ public class AACMappings implements AACPage {
 	 * it should return an empty array
 	 */
 	public String[] getImageLocs() {
+		if (this.here.equals("")) {
+			return categories.getKeys();
+		} else {
+			try {
+				return categories.get(this.here).imgTxt.getKeys();
+			} catch (KeyNotFoundException e) {
+			} // try/catch
+		}
 		return null;
 	} // getImageLocs()
 	
@@ -96,7 +147,7 @@ public class AACMappings implements AACPage {
 	 * category
 	 */
 	public void reset() {
-		this.here = categories;
+		this.here = "";
 	} // reset()
 	
 	
@@ -121,7 +172,7 @@ public class AACMappings implements AACPage {
 	 * AAC mapping to
 	 */
 	public void writeToFile(String filename) {
-		
+		// STUB
 	} // writeToFile(String)
 	
 	/**
@@ -131,7 +182,7 @@ public class AACMappings implements AACPage {
 	 * @param text the text associated with the image
 	 */
 	public void addItem(String imageLoc, String text) {
-		
+		this.names.addItem(imageLoc, text);
 	} // addItem()
 
 
@@ -141,7 +192,11 @@ public class AACMappings implements AACPage {
 	 * on the default category
 	 */
 	public String getCategory() {
-		return this.here;
+		if (this.here.equals("")) {
+			return "";
+		} else {
+			return names.select(this.here);
+		} // if
 	} // getCategory()
 
 
@@ -153,6 +208,12 @@ public class AACMappings implements AACPage {
 	 * can be displayed, false otherwise
 	 */
 	public boolean hasImage(String imageLoc) {
+		String[] locs = categories.getKeys();
+		for (String loc : locs) {
+			if (imageLoc.equals(loc)) {
+				return true;
+			} // if
+		} // for
 		return false;
 	} // hasImage()
 } // class AACMappings()

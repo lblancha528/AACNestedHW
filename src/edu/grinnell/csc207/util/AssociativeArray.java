@@ -209,7 +209,7 @@ public class AssociativeArray<K, V> {
     String[] keys = new String[this.size()]; 
     // i tracks positon in keys, r tracks position in pairs
     // this lets me skip blank spots in pairs and have no gaps in keys
-    for (int i = 0, r = 0; i < this.pairs.length;) {
+    for (int i = 0, r = 0; r < this.pairs.length;) {
       if (this.pairs[r] == null) {
         r++;
         continue;
