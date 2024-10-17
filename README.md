@@ -10,9 +10,10 @@ for CSC207-01 with Rebelsky
 
 **Notes to Self**
 * Check all files for random notes to self, commented out lines, etc.
-* mappings.select and mappings.getImageLocs dont work !
+* mappings.select and mappings.getImageLocs dont work ! 
 * select always returns no element exception
 * getImageLocs always returns double the expected elements
+* set doesn't set??
 
 This project can be found at <https://github.com/lblancha528/AACNestedHW>.
 The starter code for this project can be found at <https://github.com/catiembaker/AACNestedHW>.
