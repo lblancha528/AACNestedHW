@@ -64,7 +64,7 @@ public class AACMappings implements AACPage {
 			while (eyes.read() > -1) {
 				line = eyes.readLine();
 				if (!line.startsWith(">")) {
-					String[] linePieces = line.split(" ");
+					String[] linePieces = line.split(" ", 1);
 					if (linePieces.length != 2) {
 						System.err.println("Invalid file format.");
 						break;
@@ -76,13 +76,13 @@ public class AACMappings implements AACPage {
 					} catch (NullKeyException e) {
 					} // try/catch
 				} else {
-					String[] linePieces = line.split(" ");
+					String[] linePieces = line.split(" ", 1);
 					if (linePieces.length != 2) {
 						System.err.println("Invalid file format.");
 						break;
 					} // if
 					if (catHolder != null) {
-						this.addItem(linePieces[0], linePieces[1]);
+						this.categories.get(here).addItem(linePieces[0], linePieces[1]);
 					} else {
 						System.err.println("Invalid file format.");
 					} // if
@@ -111,7 +111,7 @@ public class AACMappings implements AACPage {
 	 * category
 	 */
 	public String select(String imageLoc) {
-		if ((this.here.equals("")) && this.hasImage(imageLoc)) {
+		if (this.names.hasImage(imageLoc)) {
 			this.here = imageLoc;
 			return "";
 		} else if (!this.here.equals("")) {
